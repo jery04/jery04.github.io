@@ -324,12 +324,23 @@ a {
   border-radius: 50%;
   display: grid;
   place-items: center;
+  line-height: 0;
   background: rgba(255, 255, 255, 0.1);
   color: #e2e8f0;
   font-size: 0.8rem;
   font-weight: 600;
   transition: transform 180ms ease, box-shadow 180ms ease;
   border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.social-links a svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .social-links a:hover {
@@ -747,12 +758,21 @@ a {
   gap: 1rem;
 }
 
+.footer-social {
+  text-align: center;
+  justify-self: center;
+}
+
+.footer-social .social-links {
+  justify-content: center;
+}
+
 .footer-links h4 {
   margin: 0 0 0.6rem;
   font-size: 0.95rem;
 }
 
-.footer-links a {
+.footer-links > div:not(.footer-social) a {
   display: block;
   margin-bottom: 0.5rem;
   color: var(--ink-soft);

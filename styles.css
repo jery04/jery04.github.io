@@ -297,7 +297,7 @@ a {
 .intro {
   margin: 0;
   color: var(--ink-soft);
-  max-width: 52ch;
+  max-width: 80ch;
 }
 
 .hero-actions {

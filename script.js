@@ -77,4 +77,54 @@ document.addEventListener("DOMContentLoaded", () => {
       if (toggleBtn) toggleBtn.style.display = 'none';
     }
   }
+
+  // Skills toggle: show first 8, expand on button
+  const skillsGrid = document.querySelector('.skills-grid');
+  const skillsToggle = document.getElementById('toggle-skills');
+  if (skillsGrid && skillsToggle) {
+    const skills = Array.from(skillsGrid.querySelectorAll('.skill-card'));
+    const initialCount = 8;
+    const topbar = document.querySelector('.topbar');
+
+    function showInitialSkills() {
+      skillsGrid.classList.add('collapsed');
+      skillsToggle.textContent = 'View all';
+      skillsToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function showAllSkills() {
+      skillsGrid.classList.remove('collapsed');
+      skillsToggle.textContent = 'Show less';
+      skillsToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function scrollToExpandedSkills() {
+      const target = skills[initialCount];
+      if (!target) return;
+      const topbarOffset = topbar ? topbar.offsetHeight + 24 : 96;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const targetTop = target.getBoundingClientRect().top + window.scrollY - topbarOffset;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        });
+      });
+    }
+
+    if (skills.length > initialCount) {
+      showInitialSkills();
+      skillsToggle.style.display = 'inline-flex';
+      skillsToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (skillsGrid.classList.contains('collapsed')) {
+          showAllSkills();
+          scrollToExpandedSkills();
+        } else {
+          showInitialSkills();
+        }
+      });
+    } else {
+      skillsToggle.style.display = 'none';
+    }
+  }
 });

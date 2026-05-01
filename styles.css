@@ -498,6 +498,11 @@ a {
   font-size: 1.8rem;
 }
 
+/* Limit skills grid to 8 items when collapsed */
+.skills-grid.collapsed > article:nth-child(n+9) {
+  display: none;
+}
+
 .about-text p {
   margin: 0;
   color: var(--ink-soft);

@@ -648,23 +648,42 @@ a {
 }
 
 .project-thumb {
-  height: 140px;
+  height: 156px;
   border-radius: var(--radius-md);
-  background: linear-gradient(145deg, #141c34, #0f172a);
+  overflow: hidden;
+  background-color: #0f172a;
   border: 1px solid rgba(148, 163, 184, 0.18);
+  position: relative;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
-.thumb-analytics {
-  background: linear-gradient(145deg, #0f1c34, #1d2a44, #0b1021);
+.project-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 10, 20, 0.08), rgba(7, 10, 20, 0.26));
+  pointer-events: none;
 }
 
-.thumb-commerce {
-  background: linear-gradient(145deg, #1b2434, #101827, #0b1021);
+.project-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.01);
+  transition: transform 260ms ease, filter 260ms ease;
 }
 
-.thumb-productivity {
-  background: linear-gradient(145deg, #111827, #1b223d, #0b1021);
+@media (hover: hover) {
+  .project-card:hover .project-thumb img {
+    transform: scale(1.05);
+    filter: saturate(1.08) contrast(1.02);
+  }
 }
+
 
 .project-card h3 {
   margin: 0;

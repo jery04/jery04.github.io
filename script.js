@@ -50,13 +50,27 @@ document.addEventListener("DOMContentLoaded", () => {
       if (toggleBtn) toggleBtn.textContent = 'Show less ←';
     }
 
+    function scrollToExpandedProjects() {
+      const targetCard = cards[initialCount];
+      if (!targetCard) return;
+
+      requestAnimationFrame(() => {
+        targetCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+
     if (cards.length > initialCount) {
       showInitial();
       if (toggleBtn) {
         toggleBtn.style.display = 'inline-flex';
         toggleBtn.addEventListener('click', () => {
           const anyHidden = cards.some(c => c.classList.contains('hidden'));
-          if (anyHidden) showAll(); else showInitial();
+          if (anyHidden) {
+            showAll();
+            scrollToExpandedProjects();
+          } else {
+            showInitial();
+          }
         });
       }
     } else {

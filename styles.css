@@ -203,7 +203,11 @@ a {
 }
 
 @media (hover: hover) {
-  .card:hover {
+  .card:hover,
+  .card.about:hover,
+  .card.experience:hover,
+  .cta.card:hover,
+  .hero.card:hover {
     transform: translateY(-2px);
     box-shadow: 0 30px 70px rgba(10, 14, 30, 0.16);
   }
@@ -272,6 +276,7 @@ a {
   gap: 2rem;
   align-items: center;
   overflow: hidden;
+  
 }
 
 .hero-copy h1 {

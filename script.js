@@ -32,4 +32,35 @@ document.addEventListener("DOMContentLoaded", () => {
   if (yearNode) {
     yearNode.textContent = String(new Date().getFullYear());
   }
+
+  // Projects toggle: show first 6, expand on button
+  const projectGrid = document.getElementById("project-grid");
+  if (projectGrid) {
+    const cards = Array.from(projectGrid.querySelectorAll('.project-card'));
+    const initialCount = 6;
+    const toggleBtn = document.getElementById('toggle-projects');
+
+    function showInitial() {
+      cards.forEach((c, i) => c.classList.toggle('hidden', i >= initialCount));
+      if (toggleBtn) toggleBtn.textContent = 'View all →';
+    }
+
+    function showAll() {
+      cards.forEach(c => c.classList.remove('hidden'));
+      if (toggleBtn) toggleBtn.textContent = 'Show less ←';
+    }
+
+    if (cards.length > initialCount) {
+      showInitial();
+      if (toggleBtn) {
+        toggleBtn.style.display = 'inline-flex';
+        toggleBtn.addEventListener('click', () => {
+          const anyHidden = cards.some(c => c.classList.contains('hidden'));
+          if (anyHidden) showAll(); else showInitial();
+        });
+      }
+    } else {
+      if (toggleBtn) toggleBtn.style.display = 'none';
+    }
+  }
 });

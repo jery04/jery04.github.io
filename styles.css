@@ -562,6 +562,10 @@ a {
   gap: 1.1rem;
 }
 
+.timeline.collapsed > article:nth-child(n+4) {
+  display: none;
+}
+
 .timeline-item {
   display: grid;
   grid-template-columns: 18px 1fr;

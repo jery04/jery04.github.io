@@ -127,4 +127,54 @@ document.addEventListener("DOMContentLoaded", () => {
       skillsToggle.style.display = 'none';
     }
   }
+
+  // Experience toggle: show first 3, expand on button
+  const timeline = document.querySelector('.timeline');
+  const experienceToggle = document.getElementById('toggle-experience');
+  if (timeline && experienceToggle) {
+    const items = Array.from(timeline.querySelectorAll('.timeline-item'));
+    const initialCount = 3;
+    const topbar = document.querySelector('.topbar');
+
+    function showInitialExperience() {
+      timeline.classList.add('collapsed');
+      experienceToggle.textContent = 'View all';
+      experienceToggle.setAttribute('aria-expanded', 'false');
+    }
+
+    function showAllExperience() {
+      timeline.classList.remove('collapsed');
+      experienceToggle.textContent = 'Show less';
+      experienceToggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function scrollToFourthExperienceItem() {
+      const target = items[initialCount];
+      if (!target) return;
+      const topbarOffset = topbar ? topbar.offsetHeight + 24 : 96;
+
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const targetTop = target.getBoundingClientRect().top + window.scrollY - topbarOffset;
+          window.scrollTo({ top: targetTop, behavior: 'smooth' });
+        });
+      });
+    }
+
+    if (items.length > initialCount) {
+      showInitialExperience();
+      experienceToggle.style.display = 'inline-flex';
+      experienceToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (timeline.classList.contains('collapsed')) {
+          showAllExperience();
+          scrollToFourthExperienceItem();
+        } else {
+          showInitialExperience();
+        }
+      });
+    } else {
+      experienceToggle.style.display = 'none';
+    }
+  }
 });

@@ -511,7 +511,7 @@ a {
 .about-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.55rem;
+  gap: 0.3rem;
   margin-top: 1.2rem;
 }
 

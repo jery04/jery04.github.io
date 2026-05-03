@@ -33,6 +33,52 @@ document.addEventListener("DOMContentLoaded", () => {
     yearNode.textContent = String(new Date().getFullYear());
   }
 
+  const topNavLinks = Array.from(document.querySelectorAll('.top-nav a[href^="#"]'));
+  const trackedSections = topNavLinks
+    .map((link) => {
+      const targetId = link.getAttribute('href')?.slice(1);
+      return targetId ? document.getElementById(targetId) : null;
+    })
+    .filter(Boolean);
+
+  if (topNavLinks.length && trackedSections.length) {
+    const setActiveNavLink = (activeId) => {
+      topNavLinks.forEach((link) => {
+        const isActive = link.getAttribute('href') === `#${activeId}`;
+        link.classList.toggle('active', isActive);
+        if (isActive) {
+          link.setAttribute('aria-current', 'page');
+        } else {
+          link.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    const topbar = document.querySelector('.topbar');
+    const topbarOffset = topbar ? topbar.offsetHeight + 24 : 96;
+    let activeSectionId = trackedSections[0].id;
+
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        const visibleEntries = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+        if (visibleEntries.length > 0) {
+          activeSectionId = visibleEntries[0].target.id;
+          setActiveNavLink(activeSectionId);
+        }
+      },
+      {
+        rootMargin: `-${topbarOffset}px 0px -55% 0px`,
+        threshold: [0.15, 0.3, 0.45, 0.6],
+      }
+    );
+
+    trackedSections.forEach((section) => sectionObserver.observe(section));
+    setActiveNavLink(activeSectionId);
+  }
+
   // Projects toggle: show first 6, expand on button
   const projectGrid = document.getElementById("project-grid");
   if (projectGrid) {
